@@ -1,0 +1,19 @@
+    addi    a0, x0, 3     # multiplicand = 3
+    addi    a1, x0, 4     # multiplier = 4
+    jal     ra, mul_software  # call multiply
+    ecall
+
+mul_software:
+    addi    t0, x0, 0     # t0 = 0, product accumulator
+    addi    t1, x0, 0     # t1 = 0, loop counter
+
+mul_loop:
+    beq     a1, x0, mul_done   # If multiplier == 0, end loop
+    add     t0, t0, a0         # product += multiplicand
+    addi    a1, a1, -1         # multiplier--
+    jal     x0, mul_loop       # loop
+
+mul_done:
+    add     a0, t0, x0         # Move product to a0 register
+    jalr    x0, 0(ra)          # Return
+
