@@ -1,4 +1,7 @@
 # RV32I RISC-V CPU Verilog Project
+---
+en
+---
 
 ## Overview
 
@@ -23,6 +26,7 @@ riscv32_cpu_project/
 ├── sim/                    # Simulation scripts and configuration
 ├── programs/               # Sample assembly/machine code programs
 ├── docs/                   # Documentation
+├── dockerfile/							# Docker config
 └── README.md               # This file
 ```
 
@@ -35,11 +39,12 @@ riscv32_cpu_project/
 
 ### Compilation and Simulation
 
-To compile and simulate the CPU with Icarus Verilog (example):
+To compile and simulate the CPU with Icarus Verilog:
 
 ```
-.sim/build.sh
-.sim/run.sh
+# Make sure Docker is installed and running.
+docker build -t my-iverilog .
+docker run --rm -v "$(pwd):/workspace" my-iverilog ./sim/build_run.sh
 ```
 
 
@@ -49,6 +54,57 @@ To compile and simulate the CPU with Icarus Verilog (example):
 - Run simulations to verify instruction execution and state transitions.
 - Use waveform viewers (e.g., GTKWave, ModelSim waveform window) to inspect signals visually.
 
-## Contributing
+---
+ru
+---
 
-Contributions and improvements are welcome. Please open issues or pull requests on the project repository for review.
+## Обзор
+
+В этом проекте реализовано базовое 32-битное ядро ​​ЦП RISC-V (подмножество RV32I) с использованием языка описания аппаратуры Verilog. ЦП имеет однотактную архитектуру и поддерживает базовый набор целочисленных инструкций. Он включает модульные компоненты, такие как счетчик команд, память инструкций, память данных, регистровый файл, блок управления, АЛУ, управление АЛУ и генератор непосредственных значений.
+
+Проект включает подробную систему логирования для моделирования, что облегчает отладку и понимание внутренних операций ЦП.
+
+## Особенности
+
+- Однотактный тракт данных для инструкций RV32I
+- Модульные исходные файлы Verilog для удобства сопровождения и повторного использования
+- Базовое выполнение программ, включая арифметические операции, ветвления, загрузки и сохранения
+- Логирование всех ключевых сигналов ЦП в каждом тактовом цикле
+- Включает пример тестового стенда для проверки
+
+## Структура файлов
+
+```
+riscv32_cpu_project/
+├── src/ 							# Модули исходного кода Verilog
+├── tb/ 							# Файлы тестового стенда и стимулы
+├── sim/ 							# Скрипты моделирования и конфигурация
+├── programs/ 				# Примеры программ на ассемблере/машинном коде
+├── dockerfile/				# Docker конфигурация
+└── README.md 				# Этот файл
+```
+
+## Начало работы
+
+### Предварительные условия
+
+- Инструмент моделирования Verilog например, Icarus Verilog
+- Терминальная или командная среда для запуска скриптов моделирования
+
+### Компиляция и моделирование
+
+Для компиляции и моделирования ЦП с помощью Icarus Verilog:
+
+```
+# Убедитесь, что Docker установлен и запущен.
+docker build -t my-iverilog .
+docker run --rm -v "$(pwd):/workspace" my-iverilog ./sim/build_run.sh
+```
+
+### Запуск тестов
+
+- Изменение или добавление тестовых программ для загрузки в память инструкций.
+
+- Запуск моделирования для проверки выполнения инструкций и переходов состояний.
+
+- Использование средств просмотра сигналов (например, GTKWave, окно осциллограмм ModelSim) для визуального анализа сигналов.

@@ -18,7 +18,9 @@ iverilog -g2012 -o sim/riscv32_cpu.vvp \
     tb/RV32ICPU_tb.v
 
 if [ $? -eq 0 ]; then
-    echo "Build succeeded, output file sim/riscv32_cpu.vvp created."
+    echo "Build succeeded, output file sim/riscv32_cpu.vvp created.\n"
+    # Run the simulation
+    vvp sim/riscv32_cpu.vvp
 else
     echo "Build failed."
     exit 1
